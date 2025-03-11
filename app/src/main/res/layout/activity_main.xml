@@ -8,7 +8,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Basic Textview for Testing -->
+    <!-- The CameraX preview view -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#4CAF50" />
+
+    <!-- Custom overlay for pose keypoints and skeleton lines -->
+    <com.hfad.cameraapi.PoseOverlayView
+        android:id="@+id/poseOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Basic Textview for testing/debug information -->
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="wrap_content"
@@ -17,23 +31,7 @@
         android:background="#80000000"
         android:padding="8dp"
         android:textColor="#FFFFFF"
-        android:text="Camera is starting..."
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:text="Camera is starting..." />
 
-    <!-- The CameraX preview view -->
-    <androidx.camera.view.PreviewView
-        android:id="@+id/previewView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#4CAF50"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-        <com.hfad.cameraapi.PoseOverlayView
-            android:id="@+id/poseOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
+</FrameLayout>

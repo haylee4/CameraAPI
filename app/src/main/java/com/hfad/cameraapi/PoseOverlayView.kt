@@ -32,7 +32,6 @@ class PoseOverlayView(context: Context, attrs: AttributeSet? = null) : View(cont
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawColor(Color.argb(50, 255, 0, 0))  // Semi-transparent red
         super.onDraw(canvas)
 
         // Draw each keypoint as a circle
