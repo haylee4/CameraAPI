@@ -166,7 +166,7 @@ class MainActivity : ComponentActivity() {
                 }
 
             // Select the front camera for selfies
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 // Unbind any existing use cases
