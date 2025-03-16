@@ -1,76 +1,49 @@
 package com.hfad.cameraapi
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
-import androidx.core.content.ContextCompat
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var previewView: PreviewView
+    private lateinit var imageView: ImageView
+    private lateinit var posebutton: Button
+    private lateinit var repbutton: Button
+    private lateinit var progressbutton: Button
 
-    // Launcher for requesting camera permission
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                startCamera()
-            } else {
-                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        previewView = findViewById(R.id.previewView)
+        posebutton = findViewById(R.id.poseExample)
+        repbutton = findViewById(R.id.repCounter)
+        progressbutton = findViewById(R.id.poseDetection)
 
-        // Check if we already have camera permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            startCamera()
-        } else {
-            // Request camera permission
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        repbutton.setOnClickListener(){
+            var intent = Intent(this, RepCounter::class.java)
+            startActivity(intent)
         }
-    }
 
-    private fun startCamera() {
-        // Get the camera provider
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            // Create the Preview use case
-            val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(previewView.surfaceProvider)
+        posebutton.setOnClickListener(){
+            try{
+                var intent = Intent(this, PoseComparison::class.java)
+                startActivity(intent)
             }
-
-            // Select the back camera (change to DEFAULT_FRONT_CAMERA if needed)
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-
-            try {
-                // Unbind any existing use cases
-                cameraProvider.unbindAll()
-
-                // Bind the preview use case to the lifecycle with the selected camera
-                cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview
-                )
-
-            } catch (exc: Exception) {
-                Log.e("CameraXExample", "Use case binding failed", exc)
+            catch (exc: Exception){
+                Log.e("Main", "Failed to go to PoseComparison Screen", exc)
             }
+        }
 
-        }, ContextCompat.getMainExecutor(this))
+        progressbutton.setOnClickListener(){
+            //Once model progress is done, add here
+            //var intent = Intent(this, PoseComparison::class.java)
+            //startActivity(intent)
+        }
+
+
     }
 }
